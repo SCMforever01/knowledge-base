@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 """
 Django settings for djangoProject project.
 
@@ -9,7 +10,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -74,15 +75,43 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DEFINED_CLUSTER = os.environ.get("CLUSTER_ENV", "local")
+print("server running with CLUSTER_ENV: ", DEFINED_CLUSTER)
+if DEFINED_CLUSTER == "local":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
-
-
+elif DEFINED_CLUSTER == "preview":
+    # mysql_ps = base64.b64decode("al8xY1Q3UmNGbDJvUzZCODRtdV85V2VfWDBfOXU0bUQ=").decode('utf-8')
+    mysql_ps = "mysqlpassword"
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': "preview",
+            'USER': "root",
+            'PASSWORD': mysql_ps,
+            'HOST': "127.0.0.1",
+            'PORT': 3306,
+        }
+    }
+elif DEFINED_CLUSTER == "dev":
+    # mysql_ps = base64.b64decode("al8xY1Q3UmNGbDJvUzZCODRtdV85V2VfWDBfOXU0bUQ=").decode('utf-8')
+    mysql_ps = "mysqlpassword"
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': "dev",
+            'USER': "root",
+            'PASSWORD': mysql_ps,
+            'HOST': "127.0.0.1",
+            'PORT': 3306,
+        }
+    }
+else:
+    raise Exception(f"Invalid CLUSTER_ENV: {DEFINED_CLUSTER}")
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
