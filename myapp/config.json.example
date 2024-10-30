@@ -1,0 +1,19 @@
+{
+    "apis": {
+        "openai": {
+            "type": "openai",
+            "api_key": "your_openai_api_key",
+            "base_url": "https://api.openai.com/v1"
+        },
+        "anthropic": {
+            "type": "anthropic",
+            "api_key": "your_anthropic_api_key",
+            "base_url": "https://api.anthropic.com/v1"
+        },
+        "mify": {
+            "type": "mify",
+            "api_key": "your_mify_api_key",
+            "base_url": "https://mify-be.pt.xiaomi.com/api/v1"
+        }
+    }
+}

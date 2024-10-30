@@ -1,0 +1,10 @@
+__pycache__/
+*.log
+*.xml
+*.iml
+
+
+myapp/
+config.json
+
+myapp/ali/test_chat_to_ali.py
